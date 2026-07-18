@@ -1,6 +1,15 @@
-# Shared Codex Skills
+# Shared Agent Skills
 
-Canonical source for reusable Codex skills shared across projects.
+Canonical source for reusable skills shared across AI coding agents. Skill payloads follow the open [Agent Skills specification](https://agentskills.io/specification), while small optional adapters provide agent-specific installation and presentation behavior.
+
+## Compatibility
+
+| Agent | Personal skill directory | Explicit invocation | Optional adapter |
+| --- | --- | --- | --- |
+| Codex | `~/.codex/skills` | `$plan-writer` | `agents/openai.yaml` |
+| Claude Code | `~/.claude/skills` | `/plan-writer` | None required |
+
+Both agents consume the same `SKILL.md`, `references/`, `assets/`, and `scripts/`. Claude Code ignores the optional Codex presentation metadata.
 
 ## Layout
 
@@ -8,10 +17,10 @@ Canonical source for reusable Codex skills shared across projects.
 skills/
   <skill-name>/
     SKILL.md
-    agents/openai.yaml
-    assets/       # optional output templates or reusable artifacts
-    references/   # optional instructions loaded only when needed
-    scripts/      # optional deterministic helpers
+    agents/openai.yaml  # optional Codex presentation adapter
+    assets/             # optional output templates or reusable artifacts
+    references/         # optional instructions loaded only when needed
+    scripts/            # optional deterministic helpers
 scripts/
   install-skill.sh
   validate-skills.sh
@@ -27,20 +36,33 @@ scripts/
 ./scripts/validate-skills.sh
 ```
 
-The validator uses the official `skill-creator` validator from the local Codex installation and supplies PyYAML through `uv` when necessary.
-The repository pins `uv` through `mise`; the script also supports `uv` directly or Python 3 with PyYAML already installed.
+Validation uses the open standard's pinned `skills-ref` reference implementation through `uv`. It does not depend on Codex or Claude Code being installed.
 
 ## Install a skill locally
 
+Install for both supported agents:
+
 ```bash
-./scripts/install-skill.sh plan-writer
+./scripts/install-skill.sh plan-writer all
 ```
 
-Installation creates a symlink under `${CODEX_HOME:-~/.codex}/skills`, so edits in this repository are immediately available to Codex. The installer refuses to overwrite an existing file, directory, or unrelated symlink; move the existing installation aside before linking it.
+Or install for only one:
+
+```bash
+./scripts/install-skill.sh plan-writer codex
+./scripts/install-skill.sh plan-writer claude
+```
+
+The target defaults to `all` when omitted. Installation creates symlinks in each agent's personal skill directory, so edits in this repository are available immediately. Claude Code symlink discovery requires version 2.1.203 or newer. The installer preflights every target and refuses to overwrite an existing file, directory, or unrelated symlink.
+
+For isolated tests or custom layouts, override `CODEX_SKILLS_DIR` or `CLAUDE_SKILLS_DIR`. `CODEX_HOME` remains supported when `CODEX_SKILLS_DIR` is unset.
 
 ## Add a skill
 
-1. Create `skills/<lowercase-hyphen-name>/SKILL.md` with only `name` and `description` in its YAML frontmatter.
-2. Add `agents/openai.yaml` and only the resources the skill needs.
-3. Keep core instructions concise and move detailed examples or reference material into `references/`.
-4. Run `./scripts/validate-skills.sh` before committing.
+1. Create `skills/<lowercase-hyphen-name>/SKILL.md` with the standard `name` and `description` frontmatter.
+2. Keep the skill instructions and supporting resources agent-neutral.
+3. Add agent-specific metadata only as an optional adapter, such as `agents/openai.yaml` for Codex.
+4. Keep core instructions concise and move detailed examples or reference material into `references/`.
+5. Run `./scripts/validate-skills.sh` before committing.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for repository conventions. Claude Code users can also review its official [skills documentation](https://code.claude.com/docs/en/slash-commands).

@@ -1,6 +1,6 @@
 ---
 name: plan-writer
-description: Research, write, and maintain execution-ready engineering plans organized into scoped, dependency-ordered slices with prerequisites, explicit acceptance criteria, mapped validation gates, implementation progress updates, and evidence-based completion records. Use when Codex is asked to create, rewrite, execute, or maintain an implementation plan, execution ledger, phased roadmap, slice breakdown, milestone plan, rollout checklist, or definition-of-done document—especially when work must be reviewable, independently usable, and gated before the next slice begins.
+description: Research, write, and maintain execution-ready engineering plans organized into scoped, dependency-ordered slices with prerequisites, explicit acceptance criteria, mapped validation gates, implementation progress updates, and evidence-based completion records. Use when asked to create, rewrite, execute, or maintain an implementation plan, execution ledger, phased roadmap, slice breakdown, milestone plan, rollout checklist, or definition-of-done document—especially when work must be reviewable, independently usable, and gated before the next slice begins.
 ---
 
 # Plan Writer
