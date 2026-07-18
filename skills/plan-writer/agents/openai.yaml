@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Writer"
+  short_description: "Write and execute slice-and-gate plans"
+  default_prompt: "Use $plan-writer to research, write, and maintain an execution-ready plan with scoped slices, progress updates, and mapped validation gates."
