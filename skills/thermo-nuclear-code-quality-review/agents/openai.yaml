@@ -1,0 +1,7 @@
+interface:
+  display_name: "Thermo Nuclear Code Quality Review"
+  short_description: "Review scoped changes with grounded evidence"
+  default_prompt: "Use $thermo-nuclear-code-quality-review to review the current branch changes."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Adversarial Review"
+  short_description: "Review scoped changes with grounded evidence"
+  default_prompt: "Use $adversarial-review to review the current branch changes."
+
+policy:
+  allow_implicit_invocation: false
